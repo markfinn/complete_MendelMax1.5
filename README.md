@@ -1,4 +1,4 @@
-![picture](mm15_model.png "model")
+![picture](http://github.com/markfinn/complete_MendelMax1.5/blob/master/mm15_model.png?raw=true "model")
 
 All the parts on my MendelMax in one place and model.
 
