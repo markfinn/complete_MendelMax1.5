@@ -1,4 +1,4 @@
-
+	
 module extrusion(l=200, x=20){
 	color("silver")
 	difference(){
@@ -69,6 +69,10 @@ module xaxis (w=300, color="blue"){
 	cylinder(r=8/2, h=w+30, center=true);
 
 
+	translate([-29,-w/2-33.5,31])
+	rotate([0,-90,0])
+	stepper();
+
 }
 module stepper(l=39, s=24){
 	difference(){
@@ -85,14 +89,26 @@ module stepper(l=39, s=24){
 		}
 		for(x=[-31/2, 31/2])
 		for(y=[-31/2, 31/2])
-		translate([0,0,-4.5])
-		cylinder(r=3/2, h=4.5+1);
+		translate([x,y,-4.5])
+		cylinder(r=3/2, h=4.5+30);
 	}
 }
 
-module xcarriage(x=0){
+module xcarriage(color="blue"){
+	translate([0,45,12])
 	rotate([0,180,90])
-	import_stl("2FanBushingXCarriageNoloss_repaired.stl", convexity=10);
+	color(color)
+	difference(){//remove other parts in the stl
+		import_stl("2FanBushingXCarriageNoloss_repaired.stl", convexity=10);
+	translate([35,15,-5])
+		cube([20,20,20]);
+	translate([84,9,-5])
+		cube([26,34,20]);
+	translate([95,7,-5])
+		cube([26,38,20]);
+	translate([0,63,-100])
+		cube([200,200,200]);
+	}
 //	import_stl("micro extruder v1.4.2c.stl", convexity=10);
 //	import_stl("t-micro-with-bearing-plate.stl", convexity=10);
 }
@@ -193,10 +209,10 @@ module mendelmax15(w=300, l=420, bs=50, color="blue", outervertex=false, x=100, 
 
 	translate([0,0,bs+20+z])
 	rotate([0,0,90])
-	xaxis(w=w+130);
+	xaxis(w=w+130, color=color);
 
-	translate([0,0,bs+20+z])
-	xcarriage(x=0);
+	translate([x-74,0,bs+20+z])
+	xcarriage(color=color);
 
 }
 
