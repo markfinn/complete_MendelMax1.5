@@ -54,7 +54,8 @@ module xaxis (w=300, color="blue"){
 
 		translate([-35,o2+o-w/2+50,0])
 		rotate([180,0,0])
-		import_stl("X End Clamp for MendelMax Leadscrew_1_copy.stl", convexity=10);
+		import_stl("z-endstop_integrated_clamp.stl", convexity=10);
+		//import_stl("X End Clamp for MendelMax Leadscrew_1_copy.stl", convexity=10);
 		translate([-35,o2+o-w/2,0])
 		import_stl("X End Motor for MendelMax Leadscrew_1_copy.stl", convexity=10);
 
@@ -69,9 +70,14 @@ module xaxis (w=300, color="blue"){
 	cylinder(r=8/2, h=w+30, center=true);
 
 
-	translate([-29,-w/2-33.5,31])
-	rotate([0,-90,0])
-	stepper();
+	translate([-29,-w/2-33.5,31]){
+		rotate([0,-90,0])
+		stepper();
+
+		translate([-15,0,0])
+		rotate([90,0,90])
+		belt(l=w+10);
+	}
 
 }
 module stepper(l=39, s=24){
@@ -109,11 +115,50 @@ module xcarriage(color="blue"){
 	translate([0,63,-100])
 		cube([200,200,200]);
 	}
-//	import_stl("micro extruder v1.4.2c.stl", convexity=10);
+	//translate([-3,11,0])	rotate([0,0,25])
+	color("purple")
+	translate([26.3,-8,45.5])
+	rotate([0,90,90])
+	difference(){
+		import_stl("micro extruder v1.4.2c.stl", convexity=10);
+		translate([5,-162,-100])
+		cube([20,200,200]);
+		translate([36,-100,-100])
+		cube([200,200,200]);
+	}
 //	import_stl("t-micro-with-bearing-plate.stl", convexity=10);
 }
 
-module mendelmax15(w=300, l=420, bs=50, color="blue", outervertex=false, x=100, y=100, z=100){
+module ybelt(l=420, color="blue"){
+
+	translate([0,l/2+20,0])
+	rotate([90,0,180])
+	color(color)
+	translate([0,0,-2]) import_stl("Y-Idler-mount_1_copy.stl", convexity=10);
+
+	translate([0,l/2+20+4,26])
+	rotate([90,0,180])
+	color(color)
+	import_stl("Y-Idler-tensioner_1_copy.stl", convexity=10);
+
+	translate([30,-l/2-20,25])
+	rotate([90,180,0])
+	color(color)
+	import_stl("Y_Motor_Mount_1_copy.stl", convexity=10);
+
+	translate([12.5,-l/2-50,25])
+	{
+		rotate([0,-90,0])
+		stepper();
+
+		translate([-15,0,0])
+		rotate([90,0,90])
+		belt(l=l+85);
+		}
+
+}
+
+module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=100, y=100, z=100){
 
 
 	d=l-80;
@@ -205,7 +250,7 @@ module mendelmax15(w=300, l=420, bs=50, color="blue", outervertex=false, x=100, 
 	extrusion(l=t);
 
 	translate([0,0,bs+20])
-	slide(l=420);
+	slide(l=l);
 
 	translate([0,0,bs+20+z])
 	rotate([0,0,90])
@@ -214,9 +259,26 @@ module mendelmax15(w=300, l=420, bs=50, color="blue", outervertex=false, x=100, 
 	translate([x-74,0,bs+20+z])
 	xcarriage(color=color);
 
-}
+	translate([0,0,10])
+	ybelt(l=l, color=color);
 
-//xaxis(w=0);
+
+}
+module belt(l=200, d1=10, d2=10, t=2, w=6){
+	color("black")
+	difference(){
+		hull(){
+			cylinder(r=d1/2+t, h=w, center=true);
+			translate([l, 0, 0])
+			cylinder(r=d2/2+t, h=w, center=true);
+		}	
+		hull(){
+			cylinder(r=d1/2, h=w+1, center=true);
+			translate([l, 0, 0])
+			cylinder(r=d2/2, h=w+1, center=true);
+		}	
+	}
+}
 
 mendelmax15();
 
@@ -229,10 +291,6 @@ import_stl("mm-y-belt-shield.stl", convexity=10);
 import_stl("power_usb_panel.stl", convexity=10);
 import_stl("spindleBearingAdapter.stl", convexity=10);
 import_stl("ssr.stl", convexity=10);
-import_stl("Y-Idler-mount_1_copy.stl", convexity=10);
-import_stl("Y-Idler-tensioner_1_copy.stl", convexity=10);
-import_stl("Y_Motor_Mount_1_copy.stl", convexity=10);
 import_stl("z_endstop_holder.stl", convexity=10);
-import_stl("z-endstop_integrated_clamp.stl", convexity=10);
 */
 
