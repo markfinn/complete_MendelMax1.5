@@ -1,3 +1,4 @@
+use<z_endstop.scad>
 	
 module extrusion(l=200, x=20){
 	color("silver")
@@ -21,13 +22,11 @@ module slide (l=200){
 	color("darkgray")
 	translate([0,0,10/2])
 	difference(){
-		cube([40,l,10], center=true);
+		cube([52,l,14], center=true);
 
-		translate([-9,0,3])
-		cube([6,l,5], center=true);
+		translate([0,0,8])
+		cube([29,l+1,8*2], center=true);
 
-		translate([9,0,3])
-		cube([6,l,5], center=true);
 	}
 }
 
@@ -127,6 +126,11 @@ module xcarriage(color="blue"){
 		cube([200,200,200]);
 	}
 //	import_stl("t-micro-with-bearing-plate.stl", convexity=10);
+
+	translate([0,0,-27])
+	color("gold")
+	cylinder(r=7, h=27);
+
 }
 
 module ybelt(l=420, color="blue"){
@@ -158,7 +162,18 @@ module ybelt(l=420, color="blue"){
 
 }
 
-module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=100, y=100, z=100){
+module table(){
+
+	color("black")
+	translate([0,0,3.18/2])
+	cube([238,298,3.18], center=true);
+	color("lightblue", .5)
+	translate([0,0,15-4.13/2])
+	cube([231,291,4.13], center=true);
+
+}
+
+module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=100, y=1, z=23+15+27){
 
 
 	d=l-80;
@@ -262,6 +277,12 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=100
 	translate([0,0,10])
 	ybelt(l=l, color=color);
 
+	translate([0,y,bs+20+23])
+	table();
+
+	translate([w/2,57,bs+20])
+	rotate([90,0,0])
+	zendstop(color=color, switch=1);
 
 }
 module belt(l=200, d1=10, d2=10, t=2, w=6){
@@ -279,7 +300,6 @@ module belt(l=200, d1=10, d2=10, t=2, w=6){
 		}	
 	}
 }
-
 mendelmax15();
 
 /*
