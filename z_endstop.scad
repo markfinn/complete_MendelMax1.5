@@ -1,17 +1,17 @@
 module	zendstop(color="blue", switch=0){
 $fn=12;
-w=12;
+w=13;
 t=4;
 d=1.5;
 dw=5.9;
 
-t2=8;
-w2=5;
+t2=10;
+w2=5.5;
 oh=5;
-ov=23+15+27-16-10;
+ov=23+15+27-16-7;
 os=19;
 
-t3=8;
+t3=9;
 
 dia2=2.3;
 
@@ -60,9 +60,11 @@ dia2=2.3;
 			cube([os, t3, w2]);
 		}
 		translate([0, 0, w/2])
-		rotate([90,0,0])
-		cylinder(r=5/2, h=t*3, center=true);
-
+		rotate([90,0,0]){
+			cylinder(r=5/2, h=t*3, center=true);
+			translate([0,0,-t-1000])
+			cylinder(r=8.4/2+.2, h=1000);
+		}
 		for (q=[oh+5.15,oh+5.15+9.5])
 		translate([20/2+q, ov, w/2])
 		rotate([0,0,90])
