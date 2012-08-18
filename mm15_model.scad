@@ -2,6 +2,7 @@ use<z_endstop.scad>
 use<y_endstop.scad>
 use<ssr.scad>
 use<motor_eMinebea_PG35L-048-USC0.scad>
+use<bracket_HBLFSN5.scad>
 	
 module extrusion(l=200){
 w=6; //width of the channel at the bottom.  not spec'ed in drawings from misumi, but I'm assuming it's the same as the opening width. looks about right.
@@ -330,6 +331,13 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 	translate([0,0,20/2+bs])
 	rotate([90,0,0])
 	extrusion(l=t);
+
+	for (r=[0,180])
+	rotate([0,0,r])
+	for (x1=[1,-1])
+	translate([x1*20/2,-l/2,bs-20*(x1-1)/2])
+	rotate([0,(x1-1)*90,0])
+	HBLFSN5();
 
 	translate([0,0,bs+20]){
 		slide(l=l, car=y);

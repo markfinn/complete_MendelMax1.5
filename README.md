@@ -8,12 +8,11 @@ This is all of the parts on my MendelMax in one place and model.  Useful for mod
 
 The full openscad model is in mm15_model.scad. Everything else is a part on my machine (but not necessarily my design).
 
-The model is not entirely done yet, but still usefull.
+The model is not entirely done yet, but still useful.
 
 ##Todo:
 * switch arduino mount to scad use<> instead of the stl
 * add missing plastic parts to model.
- * slide support corners
  * feet
  * glass corners
  * filament spool
