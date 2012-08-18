@@ -1,32 +1,71 @@
 use<z_endstop.scad>
+use<y_endstop.scad>
+use<ssr.scad>
+use<motor_eMinebea_PG35L-048-USC0.scad>
 	
-module extrusion(l=200, x=20){
+module extrusion(l=200){
+w=6; //width of the channel at the bottom.  not spec'ed in drawings from misumi, but I'm assuming it's the same as the opening width. looks about right.
+r=1; //corner round radius
+
 	color("silver")
 	difference(){
-		cube([x,x,l], center=true);
+		cube([20,20,l], center=true);
 
 		for (r=[0:90:270])
-			rotate([0,0,r]){
-				union(){
-					translate([0, x/2+x*.35, 0])
-					cube([x*.3,x,l*2], center=true);
+			rotate([0,0,r])
+			translate([0,20/2])
+			linear_extrude(height = l+1, center = true, convexity = 10)
+			polygon([[-3,1],[-3,-2], [-6, -2], [-6, -w/2], [-w/2, -6], [w/2, -6], [6, -w/2], [6, -2], [3, -2], [3, 1]], convexity = 10);
 
-					translate([0, x*.35, 0])
-					cube([x*.4,x*.15,l*2], center=true);
-				}
+		cylinder(r=4.2/2, h=l+1, $fn=12, center=true);
+
+		for (ro=[0:90:270])
+			rotate([0,0,ro])
+			translate([20/2-r,20/2-r, -(l+2)/2])
+			difference(){
+				cube([100,100,l+2]);
+
+				cylinder(r=r, h=l+2, $fn=12);
 			}
 	}
 }
 
-module slide (l=200){
-	color("darkgray")
-	translate([0,0,10/2])
+module slideprofile(l=420, topcut=1){
+	translate([0,0,14/2])
 	difference(){
 		cube([52,l,14], center=true);
 
-		translate([0,0,8])
-		cube([29,l+1,8*2], center=true);
+		if(topcut)
+			translate([0,0,8])
+			cube([27,l+1,8*2], center=true);
 
+		for (m=[[0,0,0], [1,0,0]])
+		mirror(m)
+		translate([37.1/2,-(l+1)/2,-1000-14/2+5.9])
+		cube([1000,l+1,1000]);
+	}
+}
+
+module slide (l=420, car=0){
+	n=floor((l-40)/60)+1;
+	o=(l-(n-1)*60)/2;
+
+	color("darkgray")
+	difference(){
+		slideprofile(l=l);
+
+		for (i=[0:n-1])
+			translate([0,o-l/2+i*60,-500])
+			cylinder(r=6.6/2, h=1000);
+	}
+
+	translate([0,car,0])
+	color("gray")
+	difference(){
+		translate([-73/2,-50,0.1])
+		cube([73,100,24-.1]);
+
+		slideprofile(l=200, topcut=0);
 	}
 }
 
@@ -115,22 +154,25 @@ module xcarriage(color="blue"){
 		cube([200,200,200]);
 	}
 	//translate([-3,11,0])	rotate([0,0,25])
-	color("purple")
-	translate([26.3,-8,45.5])
-	rotate([0,90,90])
+	color(color)
+	translate([-62,8.5,11.9])
+	rotate([0,90,-90])
 	difference(){
-		import_stl("micro extruder v1.4.2c.stl", convexity=10);
-		translate([5,-162,-100])
+		import_stl("t-micro-v1.4.3.stl", convexity=10);
+		translate([-31,-172,-100])
 		cube([20,200,200]);
-		translate([36,-100,-100])
+		translate([5,-100,-100])
 		cube([200,200,200]);
 	}
-//	import_stl("t-micro-with-bearing-plate.stl", convexity=10);
 
-	translate([0,0,-27])
+	translate([-25,0,-27])
 	color("gold")
 	cylinder(r=7, h=27);
 
+	translate([-22,8.5,33])
+	rotate([0,90,-90])
+	rotate([0,0,37])
+	motor();
 }
 
 module ybelt(l=420, color="blue"){
@@ -158,6 +200,15 @@ module ybelt(l=420, color="blue"){
 		translate([-15,0,0])
 		rotate([90,0,90])
 		belt(l=l+85);
+
+		rotate([180,90,0])
+		color(color)
+		difference(){ 
+			import_stl("mm-y-belt-shield.stl", convexity=10); 
+			translate([-500,-1000,8-1000]) 
+			cube([1000,1000,1000]);
+		}
+
 		}
 
 }
@@ -173,7 +224,23 @@ module table(){
 
 }
 
-module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=100, y=1, z=23+15+27){
+
+module ramps(color="blue"){
+	color(color)
+	import_stl("arduinoMount.stl", convexity=10);
+
+//http://www.thingiverse.com/thing:21497
+	color("limegreen")
+	translate([53.7,29.8,9])
+	import_stl("ArduinoMegaBoard.stl", convexity=10);
+
+	color("limegreen")
+	translate([98.04,31.6,20.62])
+	import_stl("Ramps14_3D.stl", convexity=10);
+}
+
+
+module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30, y=50, z=24+15+27){
 
 
 	d=l-80;
@@ -264,25 +331,52 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=100
 	rotate([90,0,0])
 	extrusion(l=t);
 
-	translate([0,0,bs+20])
-	slide(l=l);
+	translate([0,0,bs+20]){
+		slide(l=l, car=y);
+		color(color)
+		translate([0,y+12,-15.25])
+		rotate([0,-90,90])
+		import_stl("Belt Anchor for y-carriage-2.stl", convexity=10);
+	}
 
 	translate([0,0,bs+20+z])
-	rotate([0,0,90])
+	rotate([0,0,-90])
 	xaxis(w=w+130, color=color);
 
 	translate([x-74,0,bs+20+z])
+	rotate([0,0,180])
 	xcarriage(color=color);
 
 	translate([0,0,10])
 	ybelt(l=l, color=color);
 
-	translate([0,y,bs+20+23])
-	table();
+	translate([0,y,bs+20+24])
+	table(color=color);
 
-	translate([w/2,57,bs+20])
-	rotate([90,0,0])
+	translate([-w/2,-57,bs+20])
+	rotate([90,0,180])
 	zendstop(color=color, switch=1);
+
+	translate([-54,-l/2-10,bs+20])
+	yendstop(color=color, switch=1);
+
+	//power supply
+	color("gold")
+	translate([20,-30,5])
+	cube([98, 158,40]);
+
+	translate([w/2-20-4,-110,20+(bs-20)/2])
+	rotate([0,-90,0])
+	display_ssr();
+
+	translate([-w/2+20,-140,20+(bs-20)/2-30])
+	rotate([90,0,90])
+	ramps(color);
+
+	translate([-w/2+20+110/2+1,-l/2-20,20+(bs-20)/2])
+	rotate([90,0,180])
+	color(color)
+	translate([0,0,-3.8]) import_stl("power_usb_panel.stl", convexity=10);
 
 }
 module belt(l=200, d1=10, d2=10, t=2, w=6){
@@ -300,17 +394,20 @@ module belt(l=200, d1=10, d2=10, t=2, w=6){
 		}	
 	}
 }
-mendelmax15();
+
+
+
+
+mendelmax15(outervertex=true);
+
 
 /*
+slide support corners
+feet
+
 import_stl("4corners.stl", convexity=10);
-import_stl("arduinoMount.stl", convexity=10);
-import_stl("Belt Anchor for y-carriage-2.stl", convexity=10);
 import_stl("clip.stl", convexity=10);
-import_stl("mm-y-belt-shield.stl", convexity=10);
-import_stl("power_usb_panel.stl", convexity=10);
 import_stl("spindleBearingAdapter.stl", convexity=10);
-import_stl("ssr.stl", convexity=10);
-import_stl("z_endstop_holder.stl", convexity=10);
+
 */
 
