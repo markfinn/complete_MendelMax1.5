@@ -174,15 +174,15 @@ module mount_cover(){
 	}
 }
 
-module display_ssr(){
+module display_ssr(color="orange"){
 
 ssr();
 
-	color("orange")
+	color(color)
 	translate([0,0,-mount_t-mount_lipinset])
 	mount_plate();
 
-	color("orange")
+	color(color)
 	translate([0,0,-mount_lipinset])
 	mount_cover();
 

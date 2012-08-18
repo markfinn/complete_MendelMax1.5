@@ -367,7 +367,7 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 
 	translate([w/2-20-4,-110,20+(bs-20)/2])
 	rotate([0,-90,0])
-	display_ssr();
+	display_ssr(color=color);
 
 	translate([-w/2+20,-140,20+(bs-20)/2-30])
 	rotate([90,0,90])
