@@ -1,3 +1,6 @@
+use<ss_3gl13p.scad>
+
+
 module	zendstop(color="blue", switch=0){
 $fn=12;
 
@@ -17,22 +20,9 @@ switch_backing_height=9;
 
 switch_hole_dia=2.3;
 
-	if(switch){
-		//SS-3GL13P
+	if(switch)
 		translate([switch_offset_side,switch_offset_height,strut_width])
-		difference(){
-			union(){
-				color("black")
-				translate([0,-3.3,0]) cube([19.8,7.7+3.3,6.4]);
-				color("silver")
-				translate([5.15+15.8,10.7,0]) rotate([0,0,-170]) cube([20,1,6.4]);
-			}
-			translate([5.15,0,0])
-			cylinder(r=2.3/2, h=100, center=true);
-			translate([5.15+9.5,0,0])
-			cylinder(r=2.3/2, h=100, center=true);
-		}
-	}
+		ss_3gl13p();
 
 	color(color)
 	translate([-20/2, 0, 0])
