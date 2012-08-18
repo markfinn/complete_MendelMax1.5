@@ -1,6 +1,15 @@
 use<ss_3gl13p.scad>
 
 
+
+module nut(w, h){
+	translate([0,0,h/2])
+	for (i=[1:3])
+		rotate([0,0,60*i])
+		cube([w, w/sqrt(3), h], center=true);
+
+}
+
 module	zendstop(color="blue", switch=0){
 $fn=12;
 
@@ -18,7 +27,9 @@ strut_width=5.5;
 switch_backing_width=19;
 switch_backing_height=9;
 
-switch_hole_dia=2.3;
+switch_hole_dia=2.5;
+nuttrap_depth = 2;
+nuttrap_flats = 5;
 
 	if(switch)
 		translate([switch_offset_side,switch_offset_height,strut_width])
@@ -58,11 +69,16 @@ switch_hole_dia=2.3;
 			cylinder(r=8.4/2+.2, h=1000);
 		}
 		for (q=[switch_offset_side+5.15,switch_offset_side+5.15+9.5])
-		translate([20/2+q, switch_offset_height, extrusion_pad_width/2])
-		rotate([0,0,90])
-		cylinder(r=switch_hole_dia/2, h=strut_width*3, center=true);
+		translate([20/2+q, switch_offset_height, 0])
+		rotate([0,0,90]){
+			cylinder(r=switch_hole_dia/2, h=strut_width*3, center=true);
+
+			translate([0, 0, strut_width-nuttrap_depth])
+			nut(w=nuttrap_flats, h=nuttrap_depth+1);
+		}
 	}
 
 }
-//zendstop();
+
+zendstop();
 

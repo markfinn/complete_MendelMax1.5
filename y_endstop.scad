@@ -30,7 +30,7 @@ strut_width=5.5;
 switch_backing_width=19;
 switch_backing_height=9;
 
-switch_hole_dia=2.3;
+switch_hole_dia=2.5;
 
 	if(switch){
 		translate([switch_offset_side,switch_offset_in,switch_offset_height+6.4])
@@ -70,10 +70,11 @@ switch_hole_dia=2.3;
 		translate([20/2+q, switch_offset_height+switch_offset_in, -extrusion_pad_ridge_depth-1])
 		rotate([0,0,90]){
 			cylinder(r=switch_hole_dia/2, h=strut_width*30, center=true);
-			nut(w=4, h=extrusion_pad_ridge_depth+1.6+1);
+			nut(w=5, h=extrusion_pad_ridge_depth+2+1);
 		}
 	}
 
 }
+
 yendstop(switch=0);
 
