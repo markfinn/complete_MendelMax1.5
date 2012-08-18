@@ -79,7 +79,7 @@ difference(){
 			translate([0,0, plateThickness-mountThickness-1])
 			cylinder(r=5/2, h=mountThickness+2);
 
-			translate([0,0, plateThickness-2.5])
+			translate([0,0, plateThickness-3])
 			cylinder(r2=9.2/2+(9.2-5)/2.5*1, r1=5/2, h=2.5+1);
 		}
 }
