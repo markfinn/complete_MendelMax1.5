@@ -3,6 +3,7 @@ use<y_endstop.scad>
 use<ssr.scad>
 use<motor_eMinebea_PG35L-048-USC0.scad>
 use<bracket_HBLFSN5.scad>
+use<powersupply_SPD-60W.scad>
 	
 module extrusion(l=200){
 w=6; //width of the channel at the bottom.  not spec'ed in drawings from misumi, but I'm assuming it's the same as the opening width. looks about right.
@@ -369,9 +370,8 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 	yendstop(color=color, switch=1);
 
 	//power supply
-	color("gold")
-	translate([20,-30,5])
-	cube([98, 158,40]);
+	translate([w/2-(w/2-10-98)/2,-30,5])
+	powersupply_SPD_60W();
 
 	translate([w/2-20-4,-110,20+(bs-20)/2])
 	rotate([0,-90,0])
