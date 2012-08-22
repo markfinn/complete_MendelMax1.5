@@ -4,6 +4,7 @@ use<ssr.scad>
 use<motor_eMinebea_PG35L-048-USC0.scad>
 use<bracket_HBLFSN5.scad>
 use<powersupply_SPD-60W.scad>
+use<powersupply_brackets.scad>
 	
 module extrusion(l=200){
 w=6; //width of the channel at the bottom.  not spec'ed in drawings from misumi, but I'm assuming it's the same as the opening width. looks about right.
@@ -370,8 +371,8 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 	yendstop(color=color, switch=1);
 
 	//power supply
-	translate([w/2-(w/2-10-98)/2,-30,5])
-	powersupply_SPD_60W();
+	translate([w/2-20-5,-30,0])
+	power_supply_w_brackets(color);
 
 	translate([w/2-20-4,-110,20+(bs-20)/2])
 	rotate([0,-90,0])
@@ -404,10 +405,18 @@ module belt(l=200, d1=10, d2=10, t=2, w=6){
 }
 
 
+module power_supply_w_brackets(color="blue"){
+	powersupply_SPD_60W();
+	color(color)
+	power_supply_bracket1();
+	color(color)
+	power_supply_bracket2();
+}
 
 
+//intersection(){
 mendelmax15(outervertex=true);
-
+//translate([-500, 35, -500]) cube([1000, 30, 1000]); }
 
 /*
 slide support corners
