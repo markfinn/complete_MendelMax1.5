@@ -27,7 +27,7 @@ sd = .112*25.4;
 module power_supply_bracket1(){
 	difference(){
 		hull(){
-			translate([t-hole_inset,side_holes[0][1],side_holes[0][0]])
+			translate([t,side_holes[0][1],side_holes[0][0]])
 			rotate([0,-90,0])	
 			cylinder(r=hole_w+hole_d/2, h=t);
 
@@ -67,11 +67,11 @@ module power_supply_bracket2(){
 
 	difference(){
 		hull(){
-			translate([t-hole_inset,side_holes[1][1],side_holes[1][0]])
+			translate([t,side_holes[1][1],side_holes[1][0]])
 			rotate([0,-90,0])	
 			cylinder(r=hole_w+hole_d/2, h=t);
 
-			translate([t-hole_inset,side_holes[2][1],side_holes[2][0]])
+			translate([t,side_holes[2][1],side_holes[2][0]])
 			rotate([0,-90,0])	
 			cylinder(r=hole_w+hole_d/2, h=t);
 
