@@ -74,17 +74,17 @@ module slide (l=420, car=0){
 
 
 module zmotor (){
-	import_stl("Z_lower_motor_mount_10mm_2_copies.stl", convexity=10);
+	import("Z_lower_motor_mount_10mm_2_copies.stl", convexity=10);
 
 	translate([-32,-10.5,47])
 	rotate([-90,90,-90])
-	import_stl("Z_lower_motor_mount_10mm_support_standard_2_copies.stl", convexity=10);
+	import("Z_lower_motor_mount_10mm_support_standard_2_copies.stl", convexity=10);
 
 	translate([32,-27.5,24])
 	rotate([-90,90,90])
-	import_stl("Z_lower_motor_mount_10mm_support_mirrored_2_copies.stl", convexity=10);
+	import("Z_lower_motor_mount_10mm_support_mirrored_2_copies.stl", convexity=10);
 	translate([0,0,65])
-	import_stl("Z_rod_clasp_4_copies.stl", convexity=10);
+	import("Z_rod_clasp_4_copies.stl", convexity=10);
 }
 
 module xaxis (w=300, color="blue"){
@@ -95,13 +95,13 @@ module xaxis (w=300, color="blue"){
 
 		translate([-35,o2+o-w/2+50,0])
 		rotate([180,0,0])
-		import_stl("z-endstop_integrated_clamp.stl", convexity=10);
-		//import_stl("X End Clamp for MendelMax Leadscrew_1_copy.stl", convexity=10);
+		import("z-endstop_integrated_clamp.stl", convexity=10);
+		//import("X End Clamp for MendelMax Leadscrew_1_copy.stl", convexity=10);
 		translate([-35,o2+o-w/2,0])
-		import_stl("X End Motor for MendelMax Leadscrew_1_copy.stl", convexity=10);
+		import("X End Motor for MendelMax Leadscrew_1_copy.stl", convexity=10);
 
 		translate([0,o2+w/2-o,-10])
-		import_stl("X End Idler for MendelMax Leadscrew_1_copy.stl", convexity=10);
+		import("X End Idler for MendelMax Leadscrew_1_copy.stl", convexity=10);
 	}
 
 	color("silver")
@@ -146,7 +146,7 @@ module xcarriage(color="blue"){
 	rotate([0,180,90])
 	color(color)
 	difference(){//remove other parts in the stl
-		import_stl("2FanBushingXCarriageNoloss_repaired.stl", convexity=10);
+		import("2FanBushingXCarriageNoloss_repaired.stl", convexity=10);
 	translate([35,15,-5])
 		cube([20,20,20]);
 	translate([84,9,-5])
@@ -161,7 +161,7 @@ module xcarriage(color="blue"){
 	translate([-62,8.5,11.9])
 	rotate([0,90,-90])
 	difference(){
-		import_stl("t-micro-v1.4.3.stl", convexity=10);
+		import("t-micro-v1.4.3.stl", convexity=10);
 		translate([-31,-172,-100])
 		cube([20,200,200]);
 		translate([5,-100,-100])
@@ -183,17 +183,17 @@ module ybelt(l=420, color="blue"){
 	translate([0,l/2+20,0])
 	rotate([90,0,180])
 	color(color)
-	translate([0,0,-2]) import_stl("Y-Idler-mount_1_copy.stl", convexity=10);
+	translate([0,0,-2]) import("Y-Idler-mount_1_copy.stl", convexity=10);
 
 	translate([0,l/2+20+4,26])
 	rotate([90,0,180])
 	color(color)
-	import_stl("Y-Idler-tensioner_1_copy.stl", convexity=10);
+	import("Y-Idler-tensioner_1_copy.stl", convexity=10);
 
 	translate([30,-l/2-20,25])
 	rotate([90,180,0])
 	color(color)
-	import_stl("Y_Motor_Mount_1_copy.stl", convexity=10);
+	import("Y_Motor_Mount_1_copy.stl", convexity=10);
 
 	translate([12.5,-l/2-50,25])
 	{
@@ -207,7 +207,7 @@ module ybelt(l=420, color="blue"){
 		rotate([180,90,0])
 		color(color)
 		difference(){ 
-			import_stl("mm-y-belt-shield.stl", convexity=10); 
+			import("mm-y-belt-shield.stl", convexity=10); 
 			translate([-500,-1000,8-1000]) 
 			cube([1000,1000,1000]);
 		}
@@ -230,16 +230,16 @@ module table(){
 
 module ramps(color="blue"){
 	color(color)
-	import_stl("arduinoMount.stl", convexity=10);
+	import("arduinoMount.stl", convexity=10);
 
 //http://www.thingiverse.com/thing:21497
 	color("limegreen")
 	translate([53.7,29.8,9])
-	import_stl("ArduinoMegaBoard.stl", convexity=10);
+	import("ArduinoMegaBoard.stl", convexity=10);
 
 	color("limegreen")
 	translate([98.04,31.6,20.62])
-	import_stl("Ramps14_3D.stl", convexity=10);
+	import("Ramps14_3D.stl", convexity=10);
 }
 
 
@@ -277,24 +277,24 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 		color(color){
 				translate([-w/2+10, -l/2+7, -4])
 				rotate([0,0,90])
-				import_stl("Lower Vertex Lower_Left_2_copies.stl", convexity=10);
+				import("Lower Vertex Lower_Left_2_copies.stl", convexity=10);
 				translate([-w/2+17, -l/2+7, bs+20])
 				rotate([0,0,90])
-				import_stl("Lower Vertex Upper_left_2_copies.stl", convexity=10);
+				import("Lower Vertex Upper_left_2_copies.stl", convexity=10);
 
 				translate([w/2-10, -l/2+7, -4])
 				rotate([0,0,90])
-				import_stl("Lower Vertex Lower_Right_2_copies.stl", convexity=10);
+				import("Lower Vertex Lower_Right_2_copies.stl", convexity=10);
 				translate([w/2-17, -l/2+7, bs+20])
 				rotate([0,0,90])
-				import_stl("Lower Vertex Upper_right_2_copies.stl", convexity=10);
+				import("Lower Vertex Upper_right_2_copies.stl", convexity=10);
 
 				translate([t/2+5,0,bs+l*sqrt(3)/2-25])
 				rotate([-90,0,90]){
-					import_stl("Z_Top_Vertex_10mm_2_copies.stl", convexity=10);
+					import("Z_Top_Vertex_10mm_2_copies.stl", convexity=10);
 					translate([0,-1,0])
 					mirror([0,0,1])
-					import_stl("Z_rod_clasp_4_copies.stl", convexity=10);
+					import("Z_rod_clasp_4_copies.stl", convexity=10);
 				}
 
 
@@ -308,8 +308,8 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 					translate([w/2-10, -l/2-10, bs])
 					rotate([60,0,0])
 					translate([0, l-35, 20])
-					if (outervertex) translate([-10, -70, 0]) import_stl("TopVertexOuter80mm_fixed.stl", convexity=10);
-					else translate([-40, -40, 0]) import_stl("Top_Vertex_X_2_or_4_copies.stl", convexity=10);
+					if (outervertex) translate([-10, -70, 0]) import("TopVertexOuter80mm_fixed.stl", convexity=10);
+					else translate([-40, -40, 0]) import("Top_Vertex_X_2_or_4_copies.stl", convexity=10);
 
 				}
 
@@ -346,7 +346,7 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 		color(color)
 		translate([0,y+12,-15.25])
 		rotate([0,-90,90])
-		import_stl("Belt Anchor for y-carriage-2.stl", convexity=10);
+		import("Belt Anchor for y-carriage-2.stl", convexity=10);
 	}
 
 	translate([0,0,bs+20+z])
@@ -385,7 +385,7 @@ module mendelmax15(w=300, l=420, bs=50, color="orange", outervertex=false, x=30,
 	translate([-w/2+20+110/2+1,-l/2-20,20+(bs-20)/2])
 	rotate([90,0,180])
 	color(color)
-	translate([0,0,-3.8]) import_stl("power_usb_panel.stl", convexity=10);
+	translate([0,0,-3.8]) import("power_usb_panel.stl", convexity=10);
 
 }
 module belt(l=200, d1=10, d2=10, t=2, w=6){
@@ -422,9 +422,9 @@ mendelmax15(outervertex=true);
 slide support corners
 feet
 
-import_stl("4corners.stl", convexity=10);
-import_stl("clip.stl", convexity=10);
-import_stl("spindleBearingAdapter.stl", convexity=10);
+import("4corners.stl", convexity=10);
+import("clip.stl", convexity=10);
+import("spindleBearingAdapter.stl", convexity=10);
 
 */
 
