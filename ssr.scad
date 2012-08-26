@@ -32,9 +32,9 @@ mount_dist=50;
 mount_round=9;
 
 wire_hole_w = mount_dist-2*(mount_head_clear+mount_h_d/2);
-wire_hole_d = 15;
-wire_hole_h1 = 12;
-wire_hole_h2 = 8;
+wire_hole_d = 18.5;
+wire_hole_h1 = 9;
+wire_hole_h2 = 11;
 
 module ssr(){
 
